@@ -2,15 +2,42 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Gyazo for Desktop</title>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
 </head>
 <body style="background: white;">
-    <h1>Hello World!</h1>
-    <p>
-        We are using node <script>document.write(process.versions.node)</script>,
-        Chrome <script>document.write(process.versions.chrome)</script>,
-        and Electron <script>document.write(process.versions.electron)</script>.
-    </p>
+    <h1>Gyazo for Desktop</h1>
+
+    <section>
+      <button id="start-recording-btn">Start recording</button>
+    </section>
+
+    <section>
+      <h2>Status</h2>
+    </section>
+
+    <script>
+      const { ipcRenderer } = require('electron');
+
+      // Start upload by Drag and Drop
+      document.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        for (const f of e.dataTransfer.files) {
+          console.log('File(s) you dragged here: ', f.path)
+          ipcRenderer.invoke('start-upload', f.path);
+        }
+      });
+      document.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      // Start recording 
+      document.getElementById('start-recording-btn').addEventListener('click', (e) => {
+        console.log('start-recording');
+      }); 
+    </script>
 </body>
 </html>
