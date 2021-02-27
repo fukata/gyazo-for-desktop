@@ -84,9 +84,9 @@ ipcMain.handle('start-upload', (event, ...args) => {
           .catch(reason => console.error(reason))
       } else if (meta.mimetype.indexOf('video') > -1) {
         const opts = {
-          width: 1024,
-          height: 1024,
-          rate: 10,
+          width: 800,
+          height: 800,
+          rate: 5,
         }
         console.log('Convert video to gif');
         gify(path, `${path}.gif`, opts, (err) => {
